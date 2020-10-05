@@ -40,7 +40,7 @@ class UserController extends Controller
         if (!is_null($user)) {
             return $this->successResponse(200, null, $user);
         }
-        return $this->errorResponse(400, 'No user found with that ID');
+        return $this->errorResponse(404, 'No user found with that ID');
     }
 
     public function updateUserPassword(int $id)
@@ -60,26 +60,26 @@ class UserController extends Controller
     public function updateUserPasswordToken()
     {
         if (is_null($this->request->email)) {
-            return $this->errorResponse(400, "Field 'email' is required");
+            return $this->errorResponse(400, "Field 'email' is missing");
         }
         $pass_token = $this->userService->putUserPasswordUpdateToken($this->request->email);
 
         if (!is_null($pass_token)) {
             return $this->successResponse(200, 'Token succesfully inserted', $pass_token);
         }
-        return $this->errorResponse(400, 'Email is invalid');
+        return $this->errorResponse(404, 'User with that email not found');
     }
 
     public function resetUserPasswordToken()
     {
         if (is_null($this->request->email)) {
-            return $this->errorResponse(400, "Field 'email' is required");
+            return $this->errorResponse(400, "Field 'email' is missing");
         }
 
         if ($this->userService->resetUserPasswordUpdateToken($this->request->email)) {
             return $this->successResponse(200, 'Token succesfully removed');
         }
-        return $this->errorResponse(400, 'Email is invalid');
+        return $this->errorResponse(404, 'User with that email not found');
     }
 
     public function removeUser(int $id)
@@ -87,6 +87,6 @@ class UserController extends Controller
         if ($this->userService->deleteUser($id)) {
             return $this->successResponse(200, 'User succesfully deleted');
         }
-        return $this->errorResponse(400, 'No user found with that ID');
+        return $this->errorResponse(404, 'No user found with that ID');
     }
 }
