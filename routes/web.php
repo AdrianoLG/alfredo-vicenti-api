@@ -20,5 +20,10 @@ $router->get('/', function () use ($router) {
 $router->group(['prefix' => '/api'], function () use ($router) {
     $router->group(['prefix' => '/user'], function () use ($router) {
         $router->post('/register', 'UserController@createUser');
+        $router->get('/data/{id}', 'UserController@getUser');
+        $router->put('/password/{id}', 'UserController@updateUserPassword');
+        $router->put('/password-token', 'UserController@updateUserPasswordToken');
+        $router->put('/reset-password-token', 'UserController@resetUserPasswordToken');
+        $router->delete('/remove/{id}', 'UserController@removeUser');
     });
 });

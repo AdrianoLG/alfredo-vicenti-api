@@ -42,6 +42,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     protected $attributes = [
         'shared_comments' => true,
-        'shared_ratings' => true
+        'shared_ratings' => true,
+        'password_update_token' => null
     ];
 }
