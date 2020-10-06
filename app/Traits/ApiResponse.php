@@ -20,4 +20,9 @@ trait ApiResponse
             'message' => $message
         ], $code);
     }
+
+    protected function missingFieldResponse(string $field)
+    {
+        return $this->errorResponse(400, "Field '" . $field . "' is missing");
+    }
 }

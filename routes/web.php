@@ -19,11 +19,17 @@ $router->get('/', function () use ($router) {
 
 $router->group(['prefix' => '/api'], function () use ($router) {
     $router->group(['prefix' => '/user'], function () use ($router) {
-        $router->post('/register', 'UserController@createUser');
-        $router->get('/data/{id}', 'UserController@getUser');
+        $router->post('/', 'UserController@createUser');
+        $router->get('/{id}', 'UserController@getUser');
         $router->put('/password/{id}', 'UserController@updateUserPassword');
         $router->put('/password-token', 'UserController@updateUserPasswordToken');
         $router->put('/reset-password-token', 'UserController@resetUserPasswordToken');
-        $router->delete('/remove/{id}', 'UserController@removeUser');
+        $router->delete('/{id}', 'UserController@removeUser');
+    });
+    $router->get('/books', 'BookController@getBooks');
+    $router->group(['prefix' => '/book'], function () use ($router) {
+        $router->post('/', 'BookController@createBook');
+        $router->put('/{id}', 'BookController@updateBook');
+        $router->delete('/{id}', 'BookController@removeBook');
     });
 });

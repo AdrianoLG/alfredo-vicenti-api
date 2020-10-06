@@ -45,4 +45,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'shared_ratings' => true,
         'password_update_token' => null
     ];
+
+    public function books()
+    {
+        return $this->hasMany(Book::class);
+    }
 }
