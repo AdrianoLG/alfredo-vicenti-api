@@ -19,13 +19,13 @@ class UserController extends Controller
     public function createUser()
     {
         if (is_null($this->request->name)) {
-            return $this->errorResponse(400, "Field 'name' is missing");
+            return $this->missingFieldResponse('name');
         }
         if (is_null($this->request->email)) {
-            return $this->errorResponse(400, "Field 'email' is missing");
+            return $this->missingFieldResponse('email');
         }
         if (is_null($this->request->password)) {
-            return $this->errorResponse(400, "Field 'password' is missing");
+            return $this->missingFieldResponse('password');
         }
 
         $this->userService->postUser($this->request->all());
@@ -46,10 +46,10 @@ class UserController extends Controller
     public function updateUserPassword(int $id)
     {
         if (is_null($this->request->password)) {
-            return $this->errorResponse(400, "Field 'password' is missing");
+            return $this->missingFieldResponse('password');
         }
         if (is_null($this->request->password_update_token)) {
-            return $this->errorResponse(400, "Field 'password_update_token' is missing");
+            return $this->missingFieldResponse('password_update_token');
         }
 
         if ($this->userService->putUserPassword($this->request->password, $this->request->password_update_token, $id)) {
@@ -60,7 +60,7 @@ class UserController extends Controller
     public function updateUserPasswordToken()
     {
         if (is_null($this->request->email)) {
-            return $this->errorResponse(400, "Field 'email' is missing");
+            return $this->missingFieldResponse('email');
         }
         $pass_token = $this->userService->putUserPasswordUpdateToken($this->request->email);
 
@@ -73,7 +73,7 @@ class UserController extends Controller
     public function resetUserPasswordToken()
     {
         if (is_null($this->request->email)) {
-            return $this->errorResponse(400, "Field 'email' is missing");
+            return $this->missingFieldResponse('email');
         }
 
         if ($this->userService->resetUserPasswordUpdateToken($this->request->email)) {
