@@ -32,4 +32,10 @@ $router->group(['prefix' => '/api'], function () use ($router) {
         $router->put('/{id}', 'BookController@updateBook');
         $router->delete('/{id}', 'BookController@removeBook');
     });
+    $router->get('/groups', 'GroupController@getGroups');
+    $router->group(['prefix' => '/group'], function () use ($router) {
+        $router->post('/', 'GroupController@createGroup');
+        $router->post('/user', 'GroupController@createGroupUser');
+        $router->get('/{id}', 'GroupController@getGroup');
+    });
 });

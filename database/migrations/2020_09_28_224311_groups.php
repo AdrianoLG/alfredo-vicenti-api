@@ -16,6 +16,8 @@ class Groups extends Migration
         Schema::create('groups', function (Blueprint $table) {
             $table->tinyIncrements('id');
             $table->string('name', 20);
+            $table->unsignedTinyInteger('admin');
+            $table->foreign('admin')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

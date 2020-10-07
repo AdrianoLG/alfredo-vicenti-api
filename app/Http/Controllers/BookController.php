@@ -31,7 +31,7 @@ class BookController extends Controller
             return $this->missingFieldResponse('category');
         }
 
-        $this->bookService->postBook($this->request->user_id, $this->request->all());
+        $this->bookService->postBook($this->request->all());
 
         return $this->successResponse(201, 'Book succesfully created');
     }

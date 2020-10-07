@@ -20,10 +20,9 @@ class BookService
         return $user->books;
     }
 
-    public function postBook(int $user_id, array $book)
+    public function postBook(array $book)
     {
-        $user = User::find($user_id);
-        $user->books->create($book);
+        $this->model->create($book);
     }
 
     public function putBook(int $user_id, int $id, array $book)
