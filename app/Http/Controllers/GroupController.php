@@ -18,6 +18,13 @@ class GroupController extends Controller
 
     public function createGroup()
     {
+        if (is_null($this->request->name)) {
+            return $this->missingFieldResponse('name');
+        }
+        if (is_null($this->request->admin)) {
+            return $this->missingFieldResponse('admin');
+        }
+
         $this->groupService->postGroup($this->request->all());
 
         return $this->successResponse(201, 'Group succesfully created');
@@ -25,13 +32,27 @@ class GroupController extends Controller
 
     public function createGroupUser()
     {
-        $this->groupService->postGroupUser($this->request->user_id, $this->request->group_id, $this->request->color);
+        if (is_null($this->request->user_id)) {
+            return $this->missingFieldResponse('user_id');
+        }
+        if (is_null($this->request->group_id)) {
+            return $this->missingFieldResponse('group_id');
+        }
+        if (is_null($this->request->color)) {
+            return $this->missingFieldResponse('color');
+        }
+
+        $this->groupService->postGroupUser($this->request->all());
 
         return $this->successResponse(201, 'User for group succesfully created');
     }
 
     public function getGroups()
     {
+        if (is_null($this->request->user_id)) {
+            return $this->missingFieldResponse('user_id');
+        }
+
         $groups = $this->groupService->getGroups($this->request->user_id);
 
         return $this->successResponse(200, null, $groups);
@@ -39,8 +60,72 @@ class GroupController extends Controller
 
     public function getGroup($id)
     {
+        if (is_null($this->request->user_id)) {
+            return $this->missingFieldResponse('user_id');
+        }
+
         $group = $this->groupService->getGroup($this->request->user_id, $id);
 
         return $this->successResponse(200, null, $group);
+    }
+
+    public function updateGroup($id)
+    {
+        if (is_null($this->request->user_id)) {
+            return $this->missingFieldResponse('user_id');
+        }
+        if (is_null($this->request->name)) {
+            return $this->missingFieldResponse('name');
+        }
+        if (is_null($this->request->admin)) {
+            return $this->missingFieldResponse('admin');
+        }
+
+        if ($this->groupService->putGroup($this->request->user_id, $id, $this->request->all())) {
+            return $this->successResponse(200, 'Group succesfully updated');
+        }
+        return $this->errorResponse(404, 'No group found with that ID');
+    }
+
+    public function updateGroupUser($group_user_id)
+    {
+        if (is_null($this->request->user_id)) {
+            return $this->missingFieldResponse('user_id');
+        }
+        if (is_null($this->request->group_id)) {
+            return $this->missingFieldResponse('group_id');
+        }
+        if (is_null($this->request->color)) {
+            return $this->missingFieldResponse('color');
+        }
+
+        if ($this->groupService->putGroupUser($this->request->user_id, $group_user_id, $this->request->all())) {
+            return $this->successResponse(200, 'Group user succesfully updated');
+        }
+        return $this->errorResponse(404, 'No group user found with that ID');
+    }
+
+    public function removeGroup($id)
+    {
+        if (is_null($this->request->admin)) {
+            return $this->missingFieldResponse('admin');
+        }
+
+        if ($this->groupService->deleteGroup($this->request->admin, $id)) {
+            return $this->successResponse(200, 'Group succesfully deleted');
+        }
+        return $this->errorResponse(404, 'No group found with that ID');
+    }
+
+    public function removeGroupUser($id)
+    {
+        if (is_null($this->request->group_id)) {
+            return $this->missingFieldResponse('group_id');
+        }
+
+        if ($this->groupService->deleteGroupUser($this->request->group_id, $id)) {
+            return $this->successResponse(200, 'Group user succesfully deleted');
+        }
+        return $this->errorResponse(404, 'No group user found with that ID');
     }
 }

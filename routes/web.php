@@ -37,5 +37,9 @@ $router->group(['prefix' => '/api'], function () use ($router) {
         $router->post('/', 'GroupController@createGroup');
         $router->post('/user', 'GroupController@createGroupUser');
         $router->get('/{id}', 'GroupController@getGroup');
+        $router->put('/{id}', 'GroupController@updateGroup');
+        $router->put('/user/{group_user_id}', 'GroupController@updateGroupUser');
+        $router->delete('/{id}', 'GroupController@removeGroup');
+        $router->delete('/user/{id}', 'GroupController@removeGroupUser');
     });
 });

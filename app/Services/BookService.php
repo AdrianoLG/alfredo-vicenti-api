@@ -30,7 +30,11 @@ class BookService
         $user = User::find($user_id);
         $bookToUpdate = $user->books->find($id);
 
-        $bookToUpdate->update($book);
+        if (!is_null($bookToUpdate)) {
+            $bookToUpdate->update($book);
+            return true;
+        }
+        return false;
     }
 
     public function deleteBook(int $user_id, int $id)

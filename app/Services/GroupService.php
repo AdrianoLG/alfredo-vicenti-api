@@ -21,15 +21,11 @@ class GroupService
         $this->model->create($group);
     }
 
-    public function postGroupUser(int $user_id, int $group_id, string $color)
+    public function postGroupUser(array $group)
     {
         $groupUser = new GroupUser();
 
-        $groupUser->create([
-            'user_id' => $user_id,
-            'group_id' => $group_id,
-            'color' => $color
-        ]);
+        $groupUser->create($group);
     }
 
     public function getGroups(int $user_id)
@@ -42,5 +38,53 @@ class GroupService
     {
         $user = User::find($user_id);
         return $user->groups->find($id);
+    }
+
+    public function putGroup(int $user_id, int $id, array $group)
+    {
+        $user = User::find($user_id);
+        $groupToUpdate =  $user->groups->find($id);
+
+        if (!is_null($groupToUpdate)) {
+            $groupToUpdate->update($group);
+            return true;
+        }
+        return false;
+    }
+
+    public function putGroupUser(int $user_id, int $id, array $group)
+    {
+        $groupToUpdate = GroupUser::find($id)
+            ->where('id', $id)
+            ->where('user_id', $user_id);
+
+        if (!is_null($groupToUpdate)) {
+            $groupToUpdate->update($group);
+            return true;
+        }
+        return false;
+    }
+
+    public function deleteGroup(int $admin, int $id)
+    {
+        $group = Group::find($id)->where('admin', $admin);
+
+        if (!is_null($group)) {
+            $group->delete();
+            return true;
+        }
+        return false;
+    }
+
+    public function deleteGroupUser(int $group_id, int $user_id)
+    {
+        $group = GroupUser::where('user_id', $user_id)
+            ->where('group_id', $group_id);
+
+        if (!is_null($group)) {
+            $group->delete();
+            return true;
+        }
+        return false;
     }
 }
