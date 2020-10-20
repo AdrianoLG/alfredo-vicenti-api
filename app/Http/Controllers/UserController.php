@@ -18,19 +18,38 @@ class UserController extends Controller
 
     public function createUser()
     {
-        if (is_null($this->request->name)) {
+        if (!$this->request->has('name')) {
             return $this->missingFieldResponse('name');
         }
-        if (is_null($this->request->email)) {
+        if (!$this->request->has('email')) {
             return $this->missingFieldResponse('email');
         }
-        if (is_null($this->request->password)) {
+        if (!$this->request->has('password')) {
             return $this->missingFieldResponse('password');
         }
 
         $this->userService->postUser($this->request->all());
 
         return $this->successResponse(201, 'User succesfully created');
+    }
+
+    public function loginUser()
+    {
+        if (!$this->request->has('email')) {
+            return $this->missingFieldResponse('email');
+        }
+        if (!$this->request->has('password')) {
+            return $this->missingFieldResponse('password');
+        }
+
+        $grant_type = env('GRANT_TYPE');
+        $client_id = env('CLIENT_ID');
+        $client_secret = env('CLIENT_SECRET');
+        $email = $this->request->email;
+        $password = $this->request->password;
+
+        $userData = $this->userService->postUserLogin($grant_type, $client_id, $client_secret, $email, $password);
+        return $this->successResponse(200, null, $userData);
     }
 
     public function getUser(int $id)
@@ -45,10 +64,10 @@ class UserController extends Controller
 
     public function updateUserPassword(int $id)
     {
-        if (is_null($this->request->password)) {
+        if (!$this->request->has('password')) {
             return $this->missingFieldResponse('password');
         }
-        if (is_null($this->request->password_update_token)) {
+        if (!$this->request->has('password_update_token')) {
             return $this->missingFieldResponse('password_update_token');
         }
 
@@ -59,7 +78,7 @@ class UserController extends Controller
 
     public function updateUserPasswordToken()
     {
-        if (is_null($this->request->email)) {
+        if (!$this->request->has('email')) {
             return $this->missingFieldResponse('email');
         }
         $pass_token = $this->userService->putUserPasswordUpdateToken($this->request->email);
@@ -72,7 +91,7 @@ class UserController extends Controller
 
     public function resetUserPasswordToken()
     {
-        if (is_null($this->request->email)) {
+        if (!$this->request->has('email')) {
             return $this->missingFieldResponse('email');
         }
 

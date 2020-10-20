@@ -18,16 +18,16 @@ class BookController extends Controller
 
     public function createBook()
     {
-        if (is_null($this->request->user_id)) {
+        if (!$this->request->has('user_id')) {
             return $this->missingFieldResponse('user_id');
         }
-        if (is_null($this->request->title)) {
+        if (!$this->request->has('title')) {
             return $this->missingFieldResponse('title');
         }
-        if (is_null($this->request->author)) {
+        if (!$this->request->has('author')) {
             return $this->missingFieldResponse('author');
         }
-        if (is_null($this->request->category)) {
+        if (!$this->request->has('category')) {
             return $this->missingFieldResponse('category');
         }
 
@@ -45,16 +45,16 @@ class BookController extends Controller
 
     public function updateBook(int $id)
     {
-        if (is_null($this->request->user_id)) {
+        if (!$this->request->has('user_id')) {
             return $this->missingFieldResponse('user_id');
         }
-        if (is_null($this->request->title)) {
+        if (!$this->request->has('title')) {
             return $this->missingFieldResponse('title');
         }
-        if (is_null($this->request->author)) {
+        if (!$this->request->has('author')) {
             return $this->missingFieldResponse('author');
         }
-        if (is_null($this->request->category)) {
+        if (!$this->request->has('category')) {
             return $this->missingFieldResponse('category');
         }
 
@@ -66,7 +66,7 @@ class BookController extends Controller
 
     public function removeBook(int $id)
     {
-        if (is_null($this->request->user_id)) {
+        if (!$this->request->has('user_id')) {
             return $this->missingFieldResponse('user_id');
         }
         $user_id = $this->request->user_id;

@@ -18,10 +18,10 @@ class GroupController extends Controller
 
     public function createGroup()
     {
-        if (is_null($this->request->name)) {
+        if (!$this->request->has('name')) {
             return $this->missingFieldResponse('name');
         }
-        if (is_null($this->request->admin)) {
+        if (!$this->request->has('admin')) {
             return $this->missingFieldResponse('admin');
         }
 
@@ -32,13 +32,13 @@ class GroupController extends Controller
 
     public function createGroupUser()
     {
-        if (is_null($this->request->user_id)) {
+        if (!$this->request->has('user_id')) {
             return $this->missingFieldResponse('user_id');
         }
-        if (is_null($this->request->group_id)) {
+        if (!$this->request->has('group_id')) {
             return $this->missingFieldResponse('group_id');
         }
-        if (is_null($this->request->color)) {
+        if (!$this->request->has('color')) {
             return $this->missingFieldResponse('color');
         }
 
@@ -49,7 +49,7 @@ class GroupController extends Controller
 
     public function getGroups()
     {
-        if (is_null($this->request->user_id)) {
+        if (!$this->request->has('user_id')) {
             return $this->missingFieldResponse('user_id');
         }
 
@@ -60,7 +60,7 @@ class GroupController extends Controller
 
     public function getGroup($id)
     {
-        if (is_null($this->request->user_id)) {
+        if (!$this->request->has('user_id')) {
             return $this->missingFieldResponse('user_id');
         }
 
@@ -71,13 +71,13 @@ class GroupController extends Controller
 
     public function updateGroup($id)
     {
-        if (is_null($this->request->user_id)) {
+        if (!$this->request->has('user_id')) {
             return $this->missingFieldResponse('user_id');
         }
-        if (is_null($this->request->name)) {
+        if (!$this->request->has('name')) {
             return $this->missingFieldResponse('name');
         }
-        if (is_null($this->request->admin)) {
+        if (!$this->request->has('admin')) {
             return $this->missingFieldResponse('admin');
         }
 
@@ -89,13 +89,13 @@ class GroupController extends Controller
 
     public function updateGroupUser($group_user_id)
     {
-        if (is_null($this->request->user_id)) {
+        if (!$this->request->has('user_id')) {
             return $this->missingFieldResponse('user_id');
         }
-        if (is_null($this->request->group_id)) {
+        if (!$this->request->has('group_id')) {
             return $this->missingFieldResponse('group_id');
         }
-        if (is_null($this->request->color)) {
+        if (!$this->request->has('color')) {
             return $this->missingFieldResponse('color');
         }
 
@@ -107,7 +107,7 @@ class GroupController extends Controller
 
     public function removeGroup($id)
     {
-        if (is_null($this->request->admin)) {
+        if (!$this->request->has('admin')) {
             return $this->missingFieldResponse('admin');
         }
 
@@ -119,7 +119,7 @@ class GroupController extends Controller
 
     public function removeGroupUser($id)
     {
-        if (is_null($this->request->group_id)) {
+        if (!$this->request->has('group_id')) {
             return $this->missingFieldResponse('group_id');
         }
 

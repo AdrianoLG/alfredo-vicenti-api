@@ -27,6 +27,22 @@ class UserService
         $this->model->create($user);
     }
 
+    public function postUserLogin($grant_type, $client_id, $client_secret, $email, $password)
+    {
+        $user = User::where('email', $email)->first();
+
+        if (!is_null($user) && Hash::check($password, $user->password)) {
+            return response()->json([
+                    'grant_type' => $grant_type,
+                    'client_id' => $client_id,
+                    'client_secret' => $client_secret,
+                    'email' => $user->email,
+                    'password' => $password
+                ])->getData();
+        }
+        return null;
+    }
+
     public function putUserPassword(string $password, string $password_update_token, int $id)
     {
         $pass = Hash::make($password);

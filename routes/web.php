@@ -20,6 +20,7 @@ $router->get('/', function () use ($router) {
 $router->group(['prefix' => '/api'], function () use ($router) {
     $router->group(['prefix' => '/user'], function () use ($router) {
         $router->post('/', 'UserController@createUser');
+        $router->post('/login', 'UserController@loginUser');
         $router->put('/password/{id}', 'UserController@updateUserPassword');
         $router->group(['middleware' => 'auth'], function () use ($router) {
             $router->put('/password-token', 'UserController@updateUserPasswordToken');
