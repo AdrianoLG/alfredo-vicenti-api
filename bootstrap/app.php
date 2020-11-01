@@ -65,6 +65,7 @@ $app->singleton(
 
 $app->configure('app');
 $app->configure('auth');
+$app->configure('cors');
 
 \Dusterio\LumenPassport\LumenPassport::allowMultipleTokens();
 \Dusterio\LumenPassport\LumenPassport::tokensExpireIn(\Carbon\Carbon::now()->addHour());
@@ -83,6 +84,10 @@ $app->configure('auth');
 // $app->middleware([
 //     App\Http\Middleware\ExampleMiddleware::class
 // ]);
+
+$app->middleware([
+    Fruitcake\Cors\HandleCors::class,
+]);
 
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
@@ -105,6 +110,7 @@ $app->routeMiddleware([
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 $app->register(Laravel\Passport\PassportServiceProvider::class);
 $app->register(Dusterio\LumenPassport\PassportServiceProvider::class);
+$app->register(Fruitcake\Cors\CorsServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------

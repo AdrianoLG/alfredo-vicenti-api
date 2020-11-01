@@ -30,10 +30,11 @@ $router->group(['prefix' => '/api'], function () use ($router) {
         });
     });
     $router->group(['middleware' => 'auth'], function () use ($router) {
-        $router->get('/books', 'BookController@getBooks');
+        $router->get('/books/user/{user_id}', 'BookController@getBooks');
         $router->group(['prefix' => '/book'], function () use ($router) {
             $router->post('/', 'BookController@createBook');
-            $router->put('/{id}', 'BookController@updateBook');
+            $router->get('/{book_id}/user/{userId}', 'BookController@getBook');
+            $router->put('/{book_id}', 'BookController@updateBook');
             $router->delete('/{id}', 'BookController@removeBook');
         });
         $router->get('/groups', 'GroupController@getGroups');

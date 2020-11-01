@@ -36,14 +36,21 @@ class BookController extends Controller
         return $this->successResponse(201, 'Book succesfully created');
     }
 
-    public function getBooks()
+    public function getBooks(int $user_id)
     {
-        $books = $this->bookService->getBooks($this->request->user_id);
+        $books = $this->bookService->getBooks($user_id);
 
         return $this->successResponse(200, null, $books);
     }
 
-    public function updateBook(int $id)
+    public function getBook(int $book_id, int $userId)
+    {
+        $book = $this->bookService->getBook($book_id, $userId);
+
+        return $this->successResponse(200, null, $book);
+    }
+
+    public function updateBook(int $book_id)
     {
         if (!$this->request->has('user_id')) {
             return $this->missingFieldResponse('user_id');
@@ -58,7 +65,7 @@ class BookController extends Controller
             return $this->missingFieldResponse('category');
         }
 
-        if ($this->bookService->putBook($this->request->user_id, $id, $this->request->all())) {
+        if ($this->bookService->putBook($this->request->user_id, $book_id, $this->request->all())) {
             return $this->successResponse(200, 'Book succesfully updated');
         }
         return $this->errorResponse(404, 'No book found with that ID');

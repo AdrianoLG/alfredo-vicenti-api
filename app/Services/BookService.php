@@ -17,7 +17,13 @@ class BookService
     public function getBooks(int $user_id)
     {
         $user = User::find($user_id);
-        return $user->books;
+        return $user->booksWithFields;
+    }
+
+    public function getBook(int $book_id, int $user_id)
+    {
+        $user = User::find($user_id);
+        return $user->books->find($book_id);
     }
 
     public function postBook(array $book)
@@ -25,10 +31,10 @@ class BookService
         $this->model->create($book);
     }
 
-    public function putBook(int $user_id, int $id, array $book)
+    public function putBook(int $user_id, int $book_id, array $book)
     {
         $user = User::find($user_id);
-        $bookToUpdate = $user->books->find($id);
+        $bookToUpdate = $user->books->find($book_id);
 
         if (!is_null($bookToUpdate)) {
             $bookToUpdate->update($book);
