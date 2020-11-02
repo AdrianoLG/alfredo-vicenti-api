@@ -68,7 +68,7 @@ $app->configure('auth');
 $app->configure('cors');
 
 \Dusterio\LumenPassport\LumenPassport::allowMultipleTokens();
-\Dusterio\LumenPassport\LumenPassport::tokensExpireIn(\Carbon\Carbon::now()->addHour());
+\Dusterio\LumenPassport\LumenPassport::tokensExpireIn(\Carbon\Carbon::now()->addDay());
 
 /*
 |--------------------------------------------------------------------------
