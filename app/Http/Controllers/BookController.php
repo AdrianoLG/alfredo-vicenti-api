@@ -65,8 +65,9 @@ class BookController extends Controller
             return $this->missingFieldResponse('category');
         }
 
-        if ($this->bookService->putBook($this->request->user_id, $book_id, $this->request->all())) {
-            return $this->successResponse(200, 'Book succesfully updated');
+        $book = $this->bookService->putBook($this->request->user_id, $book_id, $this->request->all());
+        if (!is_null($book)) {
+            return $this->successResponse(200, 'Book succesfully updated', $book);
         }
         return $this->errorResponse(404, 'No book found with that ID');
     }

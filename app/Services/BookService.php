@@ -38,9 +38,9 @@ class BookService
 
         if (!is_null($bookToUpdate)) {
             $bookToUpdate->update($book);
-            return true;
+            return $bookToUpdate;
         }
-        return false;
+        return null;
     }
 
     public function deleteBook(int $user_id, int $id)
