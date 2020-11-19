@@ -29,8 +29,8 @@ class BookService
     public function postBook(array $book)
     {
         if (!is_null($book)) {
-            $this->model->create($book);
-            return $book;
+            $newBook = $this->model->create($book);
+            return $newBook;
         } else {
             return null;
         }
