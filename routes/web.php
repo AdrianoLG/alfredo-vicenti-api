@@ -35,7 +35,7 @@ $router->group(['prefix' => '/api'], function () use ($router) {
             $router->post('/', 'BookController@createBook');
             $router->get('/{book_id}/user/{userId}', 'BookController@getBook');
             $router->put('/{book_id}', 'BookController@updateBook');
-            $router->delete('/{id}', 'BookController@removeBook');
+            $router->delete('/{book_id}/user/{user_id}', 'BookController@removeBook');
         });
         $router->get('/groups', 'GroupController@getGroups');
         $router->group(['prefix' => '/group'], function () use ($router) {

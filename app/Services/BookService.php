@@ -28,7 +28,12 @@ class BookService
 
     public function postBook(array $book)
     {
-        $this->model->create($book);
+        if (!is_null($book)) {
+            $this->model->create($book);
+            return $book;
+        } else {
+            return null;
+        }
     }
 
     public function putBook(int $user_id, int $book_id, array $book)
@@ -43,10 +48,10 @@ class BookService
         return null;
     }
 
-    public function deleteBook(int $user_id, int $id)
+    public function deleteBook(int $book_id, int $user_id)
     {
         $user = User::find($user_id);
-        $book = $user->books->find($id);
+        $book = $user->books->find($book_id);
 
         if (!is_null($book)) {
             $book->delete();

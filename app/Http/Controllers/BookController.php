@@ -31,9 +31,9 @@ class BookController extends Controller
             return $this->missingFieldResponse('category');
         }
 
-        $this->bookService->postBook($this->request->all());
+        $book = $this->bookService->postBook($this->request->all());
 
-        return $this->successResponse(201, 'Book succesfully created');
+        return $this->successResponse(201, 'Book succesfully created', $book);
     }
 
     public function getBooks(int $user_id)
@@ -72,14 +72,9 @@ class BookController extends Controller
         return $this->errorResponse(404, 'No book found with that ID');
     }
 
-    public function removeBook(int $id)
+    public function removeBook(int $book_id, int $user_id)
     {
-        if (!$this->request->has('user_id')) {
-            return $this->missingFieldResponse('user_id');
-        }
-        $user_id = $this->request->user_id;
-
-        if ($this->bookService->deleteBook($user_id, $id)) {
+        if ($this->bookService->deleteBook($book_id, $user_id)) {
             return $this->successResponse(200, 'Book succesfully deleted');
         }
         return $this->errorResponse(404, 'No book found with that ID');
