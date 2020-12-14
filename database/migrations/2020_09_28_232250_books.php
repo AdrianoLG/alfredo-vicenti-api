@@ -24,7 +24,7 @@ class Books extends Migration
             $table->smallInteger('pages')->nullable();
             $table->date('read_date', 50)->nullable();
             $table->smallInteger('rating')->nullable();
-            $table->text('comments')->nullable();
+            $table->longText('comments')->nullable();
             $table->string('editorial', 30)->nullable();
             $table->text('synopsis')->nullable();
             $table->text('lent_to', 30)->nullable();
