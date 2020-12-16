@@ -43,9 +43,9 @@ class BookController extends Controller
         return $this->successResponse(200, null, $books);
     }
 
-    public function getBook(int $book_id, int $userId)
+    public function getBook(int $book_id, int $user_id)
     {
-        $book = $this->bookService->getBook($book_id, $userId);
+        $book = $this->bookService->getBook($book_id, $user_id);
 
         return $this->successResponse(200, null, $book);
     }

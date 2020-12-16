@@ -58,18 +58,18 @@ class GroupController extends Controller
         return $this->successResponse(200, null, $groups);
     }
 
-    public function getGroup($id)
+    public function getGroup($group_id)
     {
         if (!$this->request->has('user_id')) {
             return $this->missingFieldResponse('user_id');
         }
 
-        $group = $this->groupService->getGroup($this->request->user_id, $id);
+        $group = $this->groupService->getGroup($this->request->user_id, $group_id);
 
         return $this->successResponse(200, null, $group);
     }
 
-    public function updateGroup($id)
+    public function updateGroup($group_id)
     {
         if (!$this->request->has('user_id')) {
             return $this->missingFieldResponse('user_id');
@@ -81,7 +81,7 @@ class GroupController extends Controller
             return $this->missingFieldResponse('admin');
         }
 
-        if ($this->groupService->putGroup($this->request->user_id, $id, $this->request->all())) {
+        if ($this->groupService->putGroup($this->request->user_id, $group_id, $this->request->all())) {
             return $this->successResponse(200, 'Group succesfully updated');
         }
         return $this->errorResponse(404, 'No group found with that ID');

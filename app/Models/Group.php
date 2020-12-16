@@ -23,8 +23,15 @@ class Group extends Model implements AuthenticatableContract, AuthorizableContra
         'admin'
     ];
 
+    protected $hidden = ['pivot'];
+
     public function users()
     {
-        return $this->belongsToMany(User::class)->withPivot('color');
+        return $this->belongsToMany(User::class)->select(array('name'))->withPivot('color');
+    }
+
+    public function groupUsers()
+    {
+        return $this->belongsToMany(GroupUser::class);
     }
 }

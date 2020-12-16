@@ -25,4 +25,14 @@ class GroupUser extends Model implements AuthenticatableContract, AuthorizableCo
         'user_id',
         'color'
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+    public function groups()
+    {
+        return $this->belongsToMany(Groups::class);
+    }
 }

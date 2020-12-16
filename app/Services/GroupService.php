@@ -34,16 +34,18 @@ class GroupService
         return $user->groups;
     }
 
-    public function getGroup(int $user_id, int $id)
+    public function getGroup(int $user_id, int $group_id)
     {
         $user = User::find($user_id);
-        return $user->groups->find($id);
+        $group = $user->groups->where('id', $group_id)->first();
+        $group->users;
+        return $group;
     }
 
     public function putGroup(int $user_id, int $id, array $group)
     {
         $user = User::find($user_id);
-        $groupToUpdate =  $user->groups->find($id);
+        $groupToUpdate = $user->groups->find($id);
 
         if (!is_null($groupToUpdate)) {
             $groupToUpdate->update($group);
@@ -52,10 +54,10 @@ class GroupService
         return false;
     }
 
-    public function putGroupUser(int $user_id, int $id, array $group)
+    public function putGroupUser(int $user_id, int $group_id, array $group)
     {
-        $groupToUpdate = GroupUser::find($id)
-            ->where('id', $id)
+        $groupToUpdate = GroupUser::find($group_id)
+            ->where('id', $group_id)
             ->where('user_id', $user_id);
 
         if (!is_null($groupToUpdate)) {
