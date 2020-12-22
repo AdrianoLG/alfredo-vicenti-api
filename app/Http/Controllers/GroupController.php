@@ -47,24 +47,9 @@ class GroupController extends Controller
         return $this->successResponse(201, 'User for group succesfully created');
     }
 
-    public function getGroups()
+    public function getGroup($group_id, $user_id)
     {
-        if (!$this->request->has('user_id')) {
-            return $this->missingFieldResponse('user_id');
-        }
-
-        $groups = $this->groupService->getGroups($this->request->user_id);
-
-        return $this->successResponse(200, null, $groups);
-    }
-
-    public function getGroup($group_id)
-    {
-        if (!$this->request->has('user_id')) {
-            return $this->missingFieldResponse('user_id');
-        }
-
-        $group = $this->groupService->getGroup($this->request->user_id, $group_id);
+        $group = $this->groupService->getGroup($group_id, $user_id);
 
         return $this->successResponse(200, null, $group);
     }
@@ -105,25 +90,25 @@ class GroupController extends Controller
         return $this->errorResponse(404, 'No group user found with that ID');
     }
 
-    public function removeGroup($id)
+    public function removeGroup($group_id)
     {
         if (!$this->request->has('admin')) {
             return $this->missingFieldResponse('admin');
         }
 
-        if ($this->groupService->deleteGroup($this->request->admin, $id)) {
+        if ($this->groupService->deleteGroup($this->request->admin, $group_id)) {
             return $this->successResponse(200, 'Group succesfully deleted');
         }
         return $this->errorResponse(404, 'No group found with that ID');
     }
 
-    public function removeGroupUser($id)
+    public function removeGroupUser($user_id)
     {
         if (!$this->request->has('group_id')) {
             return $this->missingFieldResponse('group_id');
         }
 
-        if ($this->groupService->deleteGroupUser($this->request->group_id, $id)) {
+        if ($this->groupService->deleteGroupUser($this->request->group_id, $user_id)) {
             return $this->successResponse(200, 'Group user succesfully deleted');
         }
         return $this->errorResponse(404, 'No group user found with that ID');

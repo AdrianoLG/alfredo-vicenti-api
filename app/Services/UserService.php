@@ -15,9 +15,10 @@ class UserService
         $this->model = new User();
     }
 
-    public function getUser(int $id)
+    public function getUser(int $user_id)
     {
-        $user = User::where('id', $id)->first(['name', 'email', 'shared_comments', 'shared_ratings']);
+        $user = User::where('id', $user_id)->first();
+        $user->groups;
         return $user;
     }
 
@@ -43,10 +44,10 @@ class UserService
         return null;
     }
 
-    public function putUserPassword(string $password, string $password_update_token, int $id)
+    public function putUserPassword(string $password, string $password_update_token, int $user_id)
     {
         $pass = Hash::make($password);
-        $user = User::find($id);
+        $user = User::find($user_id);
         $pass_update_token = $user->password_update_token;
 
         if (!is_null($pass_update_token) && $pass_update_token == $password_update_token) {
@@ -80,9 +81,9 @@ class UserService
         return false;
     }
 
-    public function deleteUser(int $id)
+    public function deleteUser(int $user_id)
     {
-        $user = User::find($id);
+        $user = User::find($user_id);
 
         if (!is_null($user)) {
             $user->delete();

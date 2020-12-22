@@ -28,18 +28,25 @@ class GroupService
         $groupUser->create($group);
     }
 
-    public function getGroups(int $user_id)
-    {
-        $user = User::find($user_id);
-        return $user->groups;
-    }
-
-    public function getGroup(int $user_id, int $group_id)
+    public function getGroup(int $group_id, int $user_id)
     {
         $user = User::find($user_id);
         $group = $user->groups->where('id', $group_id)->first();
-        $group->users;
-        return $group;
+        $users = $group->users;
+        $tmpUsers = [];
+        foreach ($users as $user) {
+            array_push($tmpUsers, [
+                'user_id' => $user->pivot->user_id,
+                'name' => $user->name,
+                'color' => $user->pivot->color
+            ]);
+        }
+        $tmpGroup = [
+            'name' => $group->name,
+            'admin' => $group->admin,
+            'users' => $tmpUsers
+        ];
+        return $tmpGroup;
     }
 
     public function putGroup(int $user_id, int $id, array $group)
@@ -67,9 +74,9 @@ class GroupService
         return false;
     }
 
-    public function deleteGroup(int $admin, int $id)
+    public function deleteGroup(int $admin, int $group_id)
     {
-        $group = Group::find($id)->where('admin', $admin);
+        $group = Group::find($group_id)->where('admin', $admin);
 
         if (!is_null($group)) {
             $group->delete();

@@ -54,16 +54,13 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public function booksWithFields()
     {
-        return $this->hasMany(Book::class)->select(array('id', 'title', 'author', 'category', 'rating', 'read_date', 'lent_date', 'lent_to', 'editorial'))->orderBy('title', 'ASC');
+        return $this->hasMany(Book::class)
+            ->select(array('id', 'title', 'author', 'category', 'rating', 'read_date', 'lent_date', 'lent_to', 'editorial'))
+            ->orderBy('title', 'ASC');
     }
 
     public function groups()
     {
         return $this->belongsToMany(Group::class);
-    }
-
-    public function groupUsers()
-    {
-        return $this->belongsToMany(GroupUser::class);
     }
 }

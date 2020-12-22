@@ -27,11 +27,8 @@ class Group extends Model implements AuthenticatableContract, AuthorizableContra
 
     public function users()
     {
-        return $this->belongsToMany(User::class)->select(array('name'))->withPivot('color');
-    }
-
-    public function groupUsers()
-    {
-        return $this->belongsToMany(GroupUser::class);
+        return $this->belongsToMany(User::class)
+            ->select(array('name'))
+            ->withPivot('color');
     }
 }

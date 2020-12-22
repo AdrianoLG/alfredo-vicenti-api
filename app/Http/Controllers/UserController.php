@@ -52,9 +52,9 @@ class UserController extends Controller
         return $this->successResponse(200, null, $userData);
     }
 
-    public function getUser(int $id)
+    public function getUser(int $user_id)
     {
-        $user = $this->userService->getUser($id);
+        $user = $this->userService->getUser($user_id);
 
         if (!is_null($user)) {
             return $this->successResponse(200, null, $user);
@@ -62,7 +62,7 @@ class UserController extends Controller
         return $this->errorResponse(404, 'No user found with that ID');
     }
 
-    public function updateUserPassword(int $id)
+    public function updateUserPassword(int $user_id)
     {
         if (!$this->request->has('password')) {
             return $this->missingFieldResponse('password');
@@ -71,7 +71,7 @@ class UserController extends Controller
             return $this->missingFieldResponse('password_update_token');
         }
 
-        if ($this->userService->putUserPassword($this->request->password, $this->request->password_update_token, $id)) {
+        if ($this->userService->putUserPassword($this->request->password, $this->request->password_update_token, $user_id)) {
             return $this->successResponse(200, 'Password succesfully updated');
         }
     }

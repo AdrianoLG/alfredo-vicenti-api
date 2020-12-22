@@ -33,4 +33,9 @@ class Book extends Model implements AuthenticatableContract, AuthorizableContrac
         'lent_to',
         'lent_date'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

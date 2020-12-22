@@ -20,6 +20,24 @@ class BookService
         return $user->booksWithFields;
     }
 
+    public function getGroupBooks(int $group_id, int $user_id)
+    {
+        $group = User::find($user_id)->groups
+            ->where('id', $group_id)
+            ->first();
+        $users = $group->users;
+        $groupBooks = [];
+        foreach ($users as $user) {
+            $usr = User::find($user->pivot->user_id);
+            array_push($groupBooks, [
+                'user' => $user->name,
+                'color' => $user->pivot->color,
+                'books' => $usr->booksWithFields
+            ]);
+        }
+        return $groupBooks;
+    }
+
     public function getBook(int $book_id, int $user_id)
     {
         $user = User::find($user_id);
