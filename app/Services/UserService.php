@@ -38,7 +38,8 @@ class UserService
                     'client_id' => $client_id,
                     'client_secret' => $client_secret,
                     'email' => $user->email,
-                    'password' => $password
+                    'password' => $password,
+                    'user_id' => $user->id
                 ])->getData();
         }
         return null;
