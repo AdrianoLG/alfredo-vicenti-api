@@ -34,12 +34,13 @@ class UserService
 
         if (!is_null($user) && Hash::check($password, $user->password)) {
             return response()->json([
-                    'grant_type' => $grant_type,
-                    'client_id' => $client_id,
-                    'client_secret' => $client_secret,
+                    'user_id' => $user->id,
+                    'name' => $user->name,
                     'email' => $user->email,
                     'password' => $password,
-                    'user_id' => $user->id
+                    'grant_type' => $grant_type,
+                    'client_id' => $client_id,
+                    'client_secret' => $client_secret
                 ])->getData();
         }
         return null;
