@@ -29,11 +29,7 @@ class BookService
         $groupBooks = [];
         foreach ($users as $user) {
             $usr = User::find($user->pivot->user_id);
-            array_push($groupBooks, [
-                'user' => $user->name,
-                'color' => $user->pivot->color,
-                'books' => $usr->booksWithFields
-            ]);
+            array_push($groupBooks, $usr->booksWithFields);
         }
         return $groupBooks;
     }

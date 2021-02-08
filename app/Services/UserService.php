@@ -18,7 +18,12 @@ class UserService
     public function getUser(int $user_id)
     {
         $user = User::where('id', $user_id)->first();
-        $user->groups;
+        $groups = $user->groups;
+        $userGroups = [];
+        foreach ($groups as $group) {
+            array_push($userGroups, ['name' => $group->name, 'users' => $group->users]);
+        }
+        $user->userGroups;
         return $user;
     }
 

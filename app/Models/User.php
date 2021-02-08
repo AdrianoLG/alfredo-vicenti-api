@@ -55,7 +55,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function booksWithFields()
     {
         return $this->hasMany(Book::class)
-            ->select(array('id', 'title', 'author', 'category', 'rating', 'read_date', 'lent_date', 'lent_to', 'editorial'))
+            ->select(array('id', 'user_id', 'title', 'author', 'category', 'rating', 'read_date', 'lent_date', 'lent_to', 'editorial'))
             ->orderBy('title', 'ASC');
     }
 
