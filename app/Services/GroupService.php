@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Models\Group;
 use App\Models\GroupUser;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
 
 class GroupService
 {
@@ -18,7 +17,7 @@ class GroupService
 
     public function postGroup(array $group)
     {
-        $this->model->create($group);
+        return $this->model->create($group);
     }
 
     public function postGroupUser(array $group)
@@ -74,11 +73,11 @@ class GroupService
         return false;
     }
 
-    public function deleteGroup(int $admin, int $group_id)
+    public function deleteGroup(int $group_id, int $admin_id)
     {
-        $group = Group::find($group_id)->where('admin', $admin);
+        $group = Group::find($group_id);
 
-        if (!is_null($group)) {
+        if (!is_null($group) && $group->admin === $admin_id) {
             $group->delete();
             return true;
         }

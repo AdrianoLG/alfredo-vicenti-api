@@ -25,9 +25,9 @@ class GroupController extends Controller
             return $this->missingFieldResponse('admin');
         }
 
-        $this->groupService->postGroup($this->request->all());
+        $group = $this->groupService->postGroup($this->request->all());
 
-        return $this->successResponse(201, 'Group succesfully created');
+        return $this->successResponse(201, 'Group succesfully created', $group);
     }
 
     public function createGroupUser()
@@ -90,13 +90,9 @@ class GroupController extends Controller
         return $this->errorResponse(404, 'No group user found with that ID');
     }
 
-    public function removeGroup($group_id)
+    public function removeGroup($group_id, $admin_id)
     {
-        if (!$this->request->has('admin')) {
-            return $this->missingFieldResponse('admin');
-        }
-
-        if ($this->groupService->deleteGroup($this->request->admin, $group_id)) {
+        if ($this->groupService->deleteGroup($group_id, $admin_id)) {
             return $this->successResponse(200, 'Group succesfully deleted');
         }
         return $this->errorResponse(404, 'No group found with that ID');
