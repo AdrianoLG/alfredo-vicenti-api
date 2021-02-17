@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Group;
 use App\Models\GroupUser;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class GroupService
 {
@@ -25,6 +26,20 @@ class GroupService
         $groupUser = new GroupUser();
 
         $groupUser->create($group);
+    }
+
+    public function postGroupColor(int $user_id, int $group_id, string $color)
+    {
+        $user = User::find($user_id);
+        $group = $user->groups->where('id', $group_id)->first();
+        $users = $group->users;
+        foreach ($users as $user) {
+            if ($user->pivot->user_id === $user_id) {
+                DB::table('group_user')->where('group_id', $group_id)->update(['color' => $color]);
+                return true;
+            }
+        }
+        return false;
     }
 
     public function getGroup(int $group_id, int $user_id)

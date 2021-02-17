@@ -47,6 +47,23 @@ class GroupController extends Controller
         return $this->successResponse(201, 'User for group succesfully created');
     }
 
+    public function changeGroupColor()
+    {
+        if (!$this->request->has('user_id')) {
+            return $this->missingFieldResponse('user_id');
+        }
+        if (!$this->request->has('group_id')) {
+            return $this->missingFieldResponse('group_id');
+        }
+        if (!$this->request->has('color')) {
+            return $this->missingFieldResponse('color');
+        }
+
+        $this->groupService->postGroupColor($this->request->user_id, $this->request->group_id, $this->request->color);
+
+        return $this->successResponse(201, 'Group color changed');
+    }
+
     public function getGroup($group_id, $user_id)
     {
         $group = $this->groupService->getGroup($group_id, $user_id);
