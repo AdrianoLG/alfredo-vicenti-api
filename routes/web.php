@@ -21,6 +21,7 @@ $router->group(['prefix' => '/api'], function () use ($router) {
             $router->put('/password-token', 'UserController@updateUserPasswordToken');
             $router->put('/reset-password-token', 'UserController@resetUserPasswordToken');
             $router->get('/{user_id}', 'UserController@getUser');
+            $router->post('/exists', 'UserController@userExists');
             $router->delete('/{user_id}', 'UserController@removeUser');
         });
     });

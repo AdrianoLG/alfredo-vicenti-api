@@ -27,6 +27,15 @@ class UserService
         return $user;
     }
 
+    public function userExists(string $user_email)
+    {
+        $user = User::where('email', $user_email)->first();
+        if (!is_null($user)) {
+            return true;
+        }
+        return false;
+    }
+
     public function postUser(array $user)
     {
         $user['password'] = Hash::make($user['password']);

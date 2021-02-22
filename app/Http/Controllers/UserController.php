@@ -62,6 +62,19 @@ class UserController extends Controller
         return $this->errorResponse(404, 'No user found with that ID');
     }
 
+    public function userExists()
+    {
+        if (!$this->request->has('email')) {
+            return $this->missingFieldResponse('email');
+        }
+        if ($this->userService->userExists($this->request->email)) {
+            
+            return $this->successResponse(200, null, true);
+        }
+
+        return $this->errorResponse(404, 'No user found with that ID');
+    }
+
     public function updateUserPassword(int $user_id)
     {
         if (!$this->request->has('password')) {
