@@ -23,9 +23,14 @@ class GroupService
 
     public function postGroupUser(array $group)
     {
-        $groupUser = new GroupUser();
+        $user = User::where('email', $group['email'])->first();
 
-        $groupUser->create($group);
+        $groupUser = new GroupUser();
+        $groupUser->create([
+            'user_id' => $user->id,
+            'group_id' => $group['group_id'],
+            'color' => $group['color']
+        ]);
     }
 
     public function postGroupColor(int $user_id, int $group_id, string $color)

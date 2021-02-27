@@ -32,8 +32,8 @@ class GroupController extends Controller
 
     public function createGroupUser()
     {
-        if (!$this->request->has('user_id')) {
-            return $this->missingFieldResponse('user_id');
+        if (!$this->request->has('email')) {
+            return $this->missingFieldResponse('email');
         }
         if (!$this->request->has('group_id')) {
             return $this->missingFieldResponse('group_id');
