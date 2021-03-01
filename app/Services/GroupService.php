@@ -40,7 +40,7 @@ class GroupService
         $users = $group->users;
         foreach ($users as $user) {
             if ($user->pivot->user_id === $user_id) {
-                DB::table('group_user')->where('group_id', $group_id)->update(['color' => $color]);
+                DB::table('group_user')->where('group_id', $group_id)->where('user_id', $user_id)->update(['color' => $color]);
                 return true;
             }
         }
