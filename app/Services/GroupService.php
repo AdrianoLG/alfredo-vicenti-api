@@ -106,11 +106,11 @@ class GroupService
 
     public function deleteGroupUser(int $group_id, int $user_id)
     {
-        $group = GroupUser::where('user_id', $user_id)
+        $groupUser = GroupUser::where('user_id', $user_id)
             ->where('group_id', $group_id);
 
-        if (!is_null($group)) {
-            $group->delete();
+        if (!is_null($groupUser)) {
+            $groupUser->delete();
             return true;
         }
         return false;

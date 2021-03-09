@@ -115,13 +115,9 @@ class GroupController extends Controller
         return $this->errorResponse(404, 'No group found with that ID');
     }
 
-    public function removeGroupUser($user_id)
+    public function removeGroupUser($group_id, $user_id)
     {
-        if (!$this->request->has('group_id')) {
-            return $this->missingFieldResponse('group_id');
-        }
-
-        if ($this->groupService->deleteGroupUser($this->request->group_id, $user_id)) {
+        if ($this->groupService->deleteGroupUser($group_id, $user_id)) {
             return $this->successResponse(200, 'Group user succesfully deleted');
         }
         return $this->errorResponse(404, 'No group user found with that ID');
