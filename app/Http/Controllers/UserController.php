@@ -68,11 +68,25 @@ class UserController extends Controller
             return $this->missingFieldResponse('email');
         }
         if ($this->userService->userExists($this->request->email)) {
-            
             return $this->successResponse(200, null, true);
         }
 
         return $this->errorResponse(404, 'No user found with that ID');
+    }
+
+    public function updateUserData(int $user_id)
+    {
+        if (!$this->request->has('name')) {
+            return $this->missingFieldResponse(('name'));
+        }
+
+        if (!$this->request->has('email')) {
+            return $this->missingFieldResponse(('email'));
+        }
+
+        if ($this->userService->putUserData($user_id, $this->request->name, $this->request->email)) {
+            return $this->successResponse(200, 'User data succesfully updated');
+        }
     }
 
     public function updateUserPassword(int $user_id)
@@ -87,6 +101,7 @@ class UserController extends Controller
         if ($this->userService->putUserPassword($this->request->password, $this->request->password_update_token, $user_id)) {
             return $this->successResponse(200, 'Password succesfully updated');
         }
+        return $this->errorResponse(404, 'User with that id not found');
     }
 
     public function updateUserPasswordToken()

@@ -60,6 +60,19 @@ class UserService
         return null;
     }
 
+    public function putUserData(int $user_id, string $name, string $email)
+    {
+        $user = User::find($user_id);
+
+        if (!is_null($name) && !is_null($email)) {
+            $user->name = $name;
+            $user->email = $email;
+            $user->save();
+            return true;
+        }
+        return false;
+    }
+
     public function putUserPassword(string $password, string $password_update_token, int $user_id)
     {
         $pass = Hash::make($password);
