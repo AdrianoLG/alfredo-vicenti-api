@@ -77,10 +77,10 @@ class UserService
     {
         $pass = Hash::make($password);
         $user = User::find($user_id);
-        $pass_update_token = $user->password_update_token;
 
-        if (!is_null($pass_update_token) && $pass_update_token == $password_update_token) {
+        if (!is_null($password_update_token) && Hash::check($password_update_token, $user->password_update_token)) {
             $user->password = $pass;
+            $user->password_update_token = null;
             $user->save();
             return true;
         }
@@ -93,7 +93,6 @@ class UserService
 
         if (!is_null($user->id)) {
             $user->password_update_token = Hash::make($token);
-            
             $user->save();
             return true;
         }
