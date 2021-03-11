@@ -127,9 +127,9 @@ class UserController extends Controller
         return $this->errorResponse(404, 'User with that email not found');
     }
 
-    public function removeUser(int $id)
+    public function removeUser(int $user_id)
     {
-        if ($this->userService->deleteUser($id)) {
+        if ($this->userService->deleteUser($user_id)) {
             return $this->successResponse(200, 'User succesfully deleted');
         }
         return $this->errorResponse(404, 'No user found with that ID');
