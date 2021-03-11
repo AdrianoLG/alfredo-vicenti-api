@@ -87,16 +87,17 @@ class UserService
         return false;
     }
 
-    public function putUserPasswordUpdateToken(string $email)
+    public function putUserPasswordUpdateToken(int $user_id, string $token)
     {
-        $user = User::where('email', $email)->first();
+        $user = User::find($user_id);
 
         if (!is_null($user->id)) {
-            $user->password_update_token = Hash::make(Str::random());
+            $user->password_update_token = Hash::make($token);
+            
             $user->save();
-            return $user->password_update_token;
+            return true;
         }
-        return null;
+        return false;
     }
 
     public function resetUserPasswordUpdateToken(string $email)

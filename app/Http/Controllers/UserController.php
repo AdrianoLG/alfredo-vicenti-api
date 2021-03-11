@@ -104,17 +104,15 @@ class UserController extends Controller
         return $this->errorResponse(404, 'User with that id not found');
     }
 
-    public function updateUserPasswordToken()
+    public function updateUserPasswordToken(int $user_id)
     {
-        if (!$this->request->has('email')) {
-            return $this->missingFieldResponse('email');
+        if (!$this->request->has('token')) {
+            return $this->missingFieldResponse('token');
         }
-        $pass_token = $this->userService->putUserPasswordUpdateToken($this->request->email);
-
-        if (!is_null($pass_token)) {
-            return $this->successResponse(200, 'Token succesfully inserted', $pass_token);
+        if ($this->userService->putUserPasswordUpdateToken($user_id, $this->request->token)) {
+            return $this->successResponse(200, 'Token succesfully inserted');
         }
-        return $this->errorResponse(404, 'User with that email not found');
+        return $this->errorResponse(404, 'User not found');
     }
 
     public function resetUserPasswordToken()

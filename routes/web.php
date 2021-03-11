@@ -19,7 +19,7 @@ $router->group(['prefix' => '/api'], function () use ($router) {
         $router->put('/password/{user_id}', 'UserController@updateUserPassword');
         $router->group(['middleware' => 'auth'], function () use ($router) {
             $router->get('/{user_id}', 'UserController@getUser');
-            $router->put('/password-token', 'UserController@updateUserPasswordToken');
+            $router->put('/password-token/{user_id}', 'UserController@updateUserPasswordToken');
             $router->put('/reset-password-token', 'UserController@resetUserPasswordToken');
             $router->put('/{user_id}', 'UserController@updateUserData');
             $router->post('/exists', 'UserController@userExists');
